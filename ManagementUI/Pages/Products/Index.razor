@@ -1,0 +1,38 @@
+﻿@page "/Products/"
+
+<h3>Products List </h3>
+
+@Message
+    
+@if(Products == null){
+    <p>Loading data... </p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <td>ID</td>
+                <td>Name</td>
+                <td>Descritpion</td>
+                <td>Actions</td>
+           </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Products)
+            {
+                <tr>
+                    <td>
+                         @item.Id
+                   </td>
+                    <td>@item.Name</td>
+                    <td>@item.Description</td>
+                    <td>
+                        <button class="btn tbn-success">Edit</button>
+                        <button class="btn tbn-danger">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

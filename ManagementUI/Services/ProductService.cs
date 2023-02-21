@@ -26,7 +26,8 @@ namespace ManagementUI.Services
 
         public async Task<List<ProductVM>> GetProducts()
         {
-            var response = await _client.GetAsync("products");
+            var BaseAddress = new Uri("https://localhost:7003/products");
+            var response = await _client.GetAsync(BaseAddress);
             var content = await response.Content.ReadAsStringAsync();
             if (!response.IsSuccessStatusCode)
             {

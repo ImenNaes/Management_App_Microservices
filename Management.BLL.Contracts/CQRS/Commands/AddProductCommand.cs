@@ -8,7 +8,9 @@ using System.Threading.Tasks;
 namespace Management.BLL.Contracts.CQRS.Commands
 {
     public class AddProductCommand : IRequest<int>
-    { 
-
+    {
+        public int Id { get; set; }
+        public string RequestComments { get; set; } = string.Empty; 
+        public bool concelled { get; set; }
     }
 }

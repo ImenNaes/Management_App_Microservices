@@ -1,5 +1,7 @@
-﻿using Management.BLL.Contracts.CQRS.Queries;
+﻿using Management.BLL.Contracts.CQRS.Commands;
+using Management.BLL.Contracts.CQRS.Queries;
 using Management.BLL.Contracts.DTO;
+using Management.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,8 +35,10 @@ namespace Management.Controllers
 
         // POST api/<ProductsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<ActionResult> Post(AddProductCommand model)
         {
+            var response = await _mediator.Send(model);
+            return CreatedAtAction(nameof(Get), new { id = response });
         }
 
         // PUT api/<ProductsController>/5

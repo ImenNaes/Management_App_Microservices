@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Management.BLL.Contracts.CQRS.Commands;
 using Management.BLL.Contracts.DTO;
 using Management.Domain;
 
@@ -9,6 +10,7 @@ namespace Management.BLL.Application.MappingProfiles
         public ProductProfile()
         {
             CreateMap<Product, ProductDto>().ReverseMap();
+            CreateMap<AddProductCommand, Product>().ReverseMap();
         }
     }
 }

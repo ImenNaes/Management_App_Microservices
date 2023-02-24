@@ -70,7 +70,7 @@ namespace Management.ManagementUI.Services.Base
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.18.2.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v11.0.0.0))")]
     public partial class Client : IClient
     {
-        private System.Net.Http.HttpClient _httpClient;
+        public System.Net.Http.HttpClient _httpClient;
         private System.Lazy<System.Text.Json.JsonSerializerOptions> _settings;
 
         public Client(System.Net.Http.HttpClient httpClient)

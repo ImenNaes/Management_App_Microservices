@@ -1,4 +1,6 @@
-﻿namespace ManagementUI.Services.Base
+﻿using Management.ManagementUI.Services.Base;
+
+namespace ManagementUI.Services.Base
 {
     public class BaseHttpService
     {

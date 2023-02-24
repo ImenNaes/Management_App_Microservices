@@ -6,6 +6,6 @@ namespace ManagementUI.Contracts
     public interface IProductService
     {
         Task<List<ProductVM>> GetProducts();
-        Task<Response<Guid>> AddProduct(ProductVM product); 
+        Task<Resp<Guid>> AddProduct(ProductVM product); 
     }
 }

@@ -3,39 +3,49 @@ using ManagementUI.Contracts;
 using ManagementUI.Models.Models;
 using ManagementUI.Services.Base;
 using System.Text.Json;
+using Management.ManagementUI.Services.Base;
+using System.Net.Http.Json;
+using System.Text.Json.Serialization;
+using System.Data;
+using System.Net;
+using Newtonsoft.Json;
 
 namespace ManagementUI.Services
 {
-   // public class ProductService : BaseHttpService, IProductService
     public class ProductService : IProductService
     {
-        private readonly HttpClient _client;
-        private readonly JsonSerializerOptions _options;
         private readonly IMapper _mapper;
-        public ProductService(HttpClient client, IMapper mapper)
+        private readonly HttpClient _client;
+
+        public ProductService(HttpClient client) 
         {
-            _client = client;
-            _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            _mapper = mapper;
+            this._client = client;
         }
 
-        public Task<Response<Guid>> AddProduct(ProductVM product)
-        {
-            throw new NotImplementedException();
-        }
+        //public ProductService(IClient client, IMapper mapper): base(client)
+        //public ProductService(IMapper mapper)
+        //{
+        //    _mapper = mapper;
+        //}
 
+        
         public async Task<List<ProductVM>> GetProducts()
         {
-            var BaseAddress = new Uri("https://localhost:7003/products");
-            var response = await _client.GetAsync(BaseAddress);
-            var content = await response.Content.ReadAsStringAsync();
-            if (!response.IsSuccessStatusCode)
+            var apiName = "api/Products";
+            var httpResponse = await _client.GetAsync(apiName);
+            var prods= new List<ProductVM>();   
+            if (httpResponse.IsSuccessStatusCode)
             {
-                throw new ApplicationException(content);
+                Response responseData = JsonConvert.DeserializeObject<Response>(await httpResponse.Content.ReadAsStringAsync());
+                prods= responseData.RespServerProducts;
             }
-            var products = JsonSerializer.Deserialize<List<ProductVM>>(content, _options);
-            var productsList = _mapper.Map<List<ProductVM>>(products);   
-            return productsList;
+            return prods;
+
+        }
+
+        Task<Resp<Guid>> IProductService.AddProduct(ProductVM product)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Management.ManagementUI.Services.Base;
 
-namespace ManagementUI.Services.Base
+namespace Management.ManagementUI.Services.Base.BaseHttpService
 {
     public class BaseHttpService
     {

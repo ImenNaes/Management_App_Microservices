@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ManagementUI.Models.Models
+namespace ManagementUI.Models.Product
 {
     public class ProductVM
     {

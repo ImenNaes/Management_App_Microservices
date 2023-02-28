@@ -14,11 +14,6 @@
 <div class="container" style="margin-top: 5%;">
    
 <form id="Form" (ngSubmit)="AddProduct()" [formGroup]="reactivForm">
-    <div class="mb-3">
-        <label class="form-label"> ID product: </label>
-        <input type="text" class="form-control" name="Id" id="Id" formControlName="Id"
-    placeholder="Enter id">
-   </div>
    <div class="mb-3">
         <label class="form-label"> product name: </label>
         <input type="text" class="form-control" name="Name" id="Name" formControlName="Name"
@@ -29,27 +24,26 @@
         <input type="text" class="form-control" name="Description" id="Description" formControlName="Description"
         placeholder="Enter description">
     </div>
-
   <button type="submit" class="btn btn-primary">Add </button>
 </form>
 </div>
 
 <div class="container" style="margin-top: 5%;">
-
-<table class="table">
-    <thead>
-        <th>Id</th>
-        <th>Name</th>
-        <th>Description</th>
-    </thead>
-    <tbody>
-        <tr *ngFor="let item of products">
-           <td>{{item.Id}}</td>
-           <td>{{item.Name}}</td>
-           <td>{{item.Description}}</td>
-        </tr>
-    </tbody> 
-</table>
-
-    
+    <div class="table-responsive-xxl">
+        <table class="table">
+            <thead>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of products">
+                <td>{{item.name}}</td>
+                <td>{{item.description}}</td>
+                <td><button class="btn btn-primary" (click)="EditProduct(item.id)">Edit</button></td>
+                <td><button class="btn btn-danger" (click)="DeleteProduct(item.id)">Delete</button></td>
+                </tr>
+            </tbody> 
+        </table>
+    </div>
 </div>

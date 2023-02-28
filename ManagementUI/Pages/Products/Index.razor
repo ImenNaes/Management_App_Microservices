@@ -2,8 +2,16 @@
 
 <h3>Products List </h3>
 
-@Message
-    
+@if (!string.IsNullOrEmpty(Message))
+{
+    <div class="alert alert-danger">
+        @Message 
+    </div>
+}
+
+<button class="btn btn-primary" @onclick="CreateProduct" > 
+    Add new product
+</button>
 @if(Products == null){
     <p>Loading data... </p>
 }
@@ -28,8 +36,12 @@ else
                     <td>@item.Name</td>
                     <td>@item.Description</td>
                     <td>
-                        <button class="btn tbn-success">Edit</button>
-                        <button class="btn tbn-danger">Delete</button>
+                        <button class="btn tbn-success" @onclick="@(()=>EditProduct(item.Id))">Edit</button>
+
+                        <a href="Update/@item.Id"> Edit </a>
+                        
+                        <button class="btn tbn-danger" @onclick="@(()=> DeleteProduct(item.Id))">Delete</button>
+                        <button class="btn tbn-danger">Details</button>
                     </td>
                 </tr>
             }

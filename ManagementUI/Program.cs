@@ -2,7 +2,7 @@ using Management.ManagementUI.Services.Base;
 using ManagementUI;
 using ManagementUI.Contracts;
 using ManagementUI.Services;
-using ManagementUI.Services.Base;
+using Management.ManagementUI.Services.Base;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using System.Reflection;
@@ -13,16 +13,12 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-//builder.Services.AddHttpClient<IClient,Client>(client => client.BaseAddress = new Uri("https://localhost:7003"));
+builder.Services.AddHttpClient<IClient,Client>(client => client.BaseAddress = new Uri("https://localhost:7003"));
 
-//builder.Services.AddHttpClient<IClient, Client>(client =>
+//builder.Services.AddScoped<HttpClient>(s =>
 //{
-//    client.BaseAddress = new Uri("https://localhost:7003/");
+//    return new HttpClient { BaseAddress = new Uri(@"https://localhost:7003/") };
 //});
-builder.Services.AddScoped<HttpClient>(s =>
-{
-    return new HttpClient { BaseAddress = new Uri(@"https://localhost:7003/") };
-});
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 

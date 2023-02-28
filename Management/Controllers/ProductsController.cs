@@ -2,6 +2,7 @@
 using Management.BLL.Contracts.CQRS.Queries;
 using Management.BLL.Contracts.DTO;
 using Management.Domain;
+using Management.EF.Products.Migrations;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,9 +29,10 @@ namespace Management.Controllers
 
         // GET api/<ProductsController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<ActionResult<ProductDto>> Get(int id)
         {
-            return "value";
+            var product = await _mediator.Send(new GetProductDetailsQuery(id));
+            return Ok(product); 
         }
 
         // POST api/<ProductsController>
@@ -43,14 +45,20 @@ namespace Management.Controllers
 
         // PUT api/<ProductsController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<ActionResult> Put(UpdateProductCommand model)
         {
+            await _mediator.Send(model);
+            return NoContent();
         }
 
         // DELETE api/<ProductsController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
+            var command = new DeleteProductCommand { Id= id};
+            await _mediator.Send(command);
+            Console.WriteLine("done");
+            return NoContent();
         }
     }
 }

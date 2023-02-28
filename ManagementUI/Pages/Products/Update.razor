@@ -1,0 +1,38 @@
+﻿@page "/Update"
+
+
+@inject NavigationManager NavManager
+@inject IProductService ProductService
+<h3>Update product</h3>
+
+sdsdsds
+<EditForm>
+
+    <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Name:</label>
+        <input form="Name" type="text" @bind="@product.Name" class="form-control" id="Name" placeholder="Enter name">
+    </div>
+    <div class="mb-3">
+        <label for="exampleFormControlTextarea1" class="form-label">Description:</label>
+        <input form="Description" @bind="@product.Description" class="form-control" id="Description">
+    </div>
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary">
+            Edit
+        </button>
+    </div>
+</EditForm>
+
+@code {
+    ProductVM product = new ProductVM();
+    [Parameter]
+    public int Id{ get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        product = await ProductService.GetProductById(Id);
+    }
+    protected async Task Edit()
+    {
+        await ProductService.UpdateProduct(Id, product);
+    }
+}

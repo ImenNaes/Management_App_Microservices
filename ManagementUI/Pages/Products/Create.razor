@@ -1,0 +1,30 @@
+﻿@page "/Create"
+@inject IProductService ProductService
+@inject NavigationManager Nav
+<h3>Create new product</h3>
+
+<EditForm OnValidSubmit="CreateProduct" Model="product">
+
+<div class="mb-3">
+    <label for="exampleFormControlInput1" class="form-label">Name:</label>
+    <input type="text" @bind-value="product.Name" class="form-control" id="Name" placeholder="Enter name">
+</div>
+<div class="mb-3">
+    <label for="exampleFormControlTextarea1" class="form-label">Description:</label>
+    <input @bind-value="product.Description" class="form-control" id="Description" rows="3"></input>
+</div>
+<div class="mb-3">
+    <button type="submit" class="btn btn-primary">
+        Add
+    </button>
+</div>
+</EditForm>
+
+@code {
+    ProductVM product = new ProductVM();
+    async void CreateProduct()
+    {
+        var result = await ProductService.AddProduct(product);
+         Nav.NavigateTo("/Products");
+    }
+}

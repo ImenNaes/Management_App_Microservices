@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using ManagementUI.Contracts;
-using ManagementUI.Models.Models;
-using ManagementUI.Services.Base;
+using ManagementUI.Models.Product;
 using System.Text.Json;
 using Management.ManagementUI.Services.Base;
 using System.Net.Http.Json;
@@ -9,43 +8,59 @@ using System.Text.Json.Serialization;
 using System.Data;
 using System.Net;
 using Newtonsoft.Json;
+using System.Net.Http.Headers;
+using Management.ManagementUI.Services.Base;
+using Management.ManagementUI.Services.Base.BaseHttpService;
 
 namespace ManagementUI.Services
 {
-    public class ProductService : IProductService
+    public class ProductService : BaseHttpService ,IProductService
     {
         private readonly IMapper _mapper;
-        private readonly HttpClient _client;
+        private readonly IClient _client;   
 
-        public ProductService(HttpClient client) 
+        public List<ProductVM>? Resp_products { get; set; }
+
+        public ProductService(IClient client, IMapper mapper) : base(client)
         {
-            this._client = client;
+            _mapper = mapper;
+            _client= client;    
         }
 
-        //public ProductService(IClient client, IMapper mapper): base(client)
-        //public ProductService(IMapper mapper)
-        //{
-        //    _mapper = mapper;
-        //}
 
-        
         public async Task<List<ProductVM>> GetProducts()
         {
-            var apiName = "api/Products";
-            var httpResponse = await _client.GetAsync(apiName);
-            var prods= new List<ProductVM>();   
-            if (httpResponse.IsSuccessStatusCode)
-            {
-                Response responseData = JsonConvert.DeserializeObject<Response>(await httpResponse.Content.ReadAsStringAsync());
-                prods= responseData.RespServerProducts;
-            }
-            return prods;
+            var result = await _client.ProductsAllAsync();
+            var products= _mapper.Map<List<ProductVM>>(result);   
+            return products;
+        }
+      
+        async Task<int> IProductService.AddProduct(ProductVM product)
+        {
+            //await _client.ProductsPOSTAsync(product);
 
+            var v = 0;
+            return v;
+        }
+   
+        public async Task<int> UpdateProduct(int idproduct, ProductVM product)
+        {
+            //var productbyid =await _client.PutAsJsonAsync("api/Products", idproduct);
+            return 0;
         }
 
-        Task<Resp<Guid>> IProductService.AddProduct(ProductVM product)
+        public async Task<ProductVM> GetProductById(int idproduct)
         {
-            throw new NotImplementedException();
+            var product = await _client.ProductsGETAsync(idproduct);
+            var productbyid= _mapper.Map<ProductVM>(product);    
+            return productbyid;
+        }
+
+        public async Task<int> DeleteProduct(int idproduct)
+        {
+            var prodtoDelete= await _client.ProductsGETAsync(idproduct);
+            await _client.ProductsDELETEAsync(idproduct);
+            return idproduct;
         }
     }
 }

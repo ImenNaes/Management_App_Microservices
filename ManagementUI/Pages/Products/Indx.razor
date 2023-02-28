@@ -1,0 +1,40 @@
+﻿@page "/indx"
+
+<h3>Indx</h3>
+@inject HttpClient client 
+@using ManagementUI.Models.Product;
+
+<table>
+    <thead>
+        <tr>
+            <td>
+
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in products)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.Description
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@code {
+    public static List<ProductVM> products = new List<ProductVM>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await client.GetFromJsonAsync<List<ProductVM>>("api/Products");
+        if (result != null)
+            products= result; 
+    }
+}

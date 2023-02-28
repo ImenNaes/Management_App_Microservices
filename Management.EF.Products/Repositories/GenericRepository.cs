@@ -17,6 +17,12 @@ namespace Management.Products.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public async Task DeleteAsync(T entity)
+        {
+             _context.Remove(entity); 
+            await _context.SaveChangesAsync();  
+        }
+
         public async Task<IReadOnlyList<T>> GetAllAsync()
         {
             return await _context.Set<T>().ToListAsync();
@@ -33,7 +39,6 @@ namespace Management.Products.Repositories
             _context.Entry(entity).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
-
 
     }
 }

@@ -1,14 +1,13 @@
-﻿using ManagementUI.Models.Models;
+﻿using ManagementUI.Models.Product;
 
 namespace ManagementUI.Services.Base
 {
-    public class Resp<T>
+    public class Response<T>
     {
-        public string? Message { get; set; }
-        public string? ValidationErrors { get; set; }
-        public string? Success { get; set; }
         public T? Data { get; set; }
-        public List<ProductVM>? Resp_products { get; set; }
+        public string? Message { get; set; }
+       // public string? ValidationErrors { get; set; }
+        public string? Success { get; set; }
 
     }
 }

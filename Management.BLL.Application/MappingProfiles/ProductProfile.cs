@@ -11,7 +11,7 @@ namespace Management.BLL.Application.MappingProfiles
         {
             CreateMap<Product, ProductDto>().ReverseMap();
             CreateMap<AddProductCommand, Product>().ReverseMap();
-            CreateMap<UpdateProductCommand, Product>().ReverseMap();
+            CreateMap<UpdateProductCommand, Product>();
         }
     }
 }
